@@ -6,11 +6,13 @@ extends InventoryItem
 @export var blunt_damage : int
 @export var slash_damage : int
 @export var magic_damage : int
+var can_damage_again : bool = true
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	var hitbox = $Area3D
-	hitbox.connect("body_entered", self, "damage")
+	var hitbox = $Cube_001/Area3D
+	hitbox.body_entered.connect(self.damage)
+	hitbox.body_exited.connect(self.allowMoreDamage)
 	pass # Replace with function body.
 
 
@@ -24,5 +26,11 @@ func attack():
 
 
 func damage(area):
-	print(area)
+	if(can_damage_again):
+		print(area)
+		can_damage_again = false
 	pass
+	
+	
+func allowMoreDamage(area):
+	can_damage_again = true

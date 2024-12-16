@@ -1,0 +1,37 @@
+extends Node
+@export var hp : int
+
+@onready var animations = $AnimationPlayer
+
+enum states { IDLE, ATTACKING, GOT_HIT}
+var current_state : states = states.IDLE
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	var hitbox = $skeleton_rig/Skeleton3D/SkeletonBox
+	hitbox.body_entered.connect(self.take_damage)
+	hitbox.body_exited.connect(self.reset_hit)
+	pass # Replace with function body.
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	match current_state:
+		states.IDLE:
+			animations.play("idle")
+		states.GOT_HIT:
+			animations.play("damage")
+	pass
+
+
+func take_damage(area):
+	var node = area
+	print(node)
+	node = node.get_parent().get_parent()
+	print(node)
+	if(node is Weapon):
+		current_state = states.GOT_HIT
+
+func reset_hit(area):
+	var node = area
+	node = node.get_parent().get_parent()
+	if(node is Weapon):
+		current_state = states.IDLE

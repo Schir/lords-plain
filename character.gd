@@ -1,4 +1,10 @@
 extends CharacterBody3D
+
+@export var hp : int = 100
+@export var stamina : float = 100
+@export var inventory : Array[InventoryItem]
+@export var gold : int = 0
+
 var speed : float = 4
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 var checkInFront : bool = false

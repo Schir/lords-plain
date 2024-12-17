@@ -8,8 +8,6 @@ var current_state : states = states.IDLE
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	var hitbox = $skeleton_rig/Skeleton3D/SkeletonBox
-	hitbox.body_entered.connect(self.take_damage)
-	hitbox.body_exited.connect(self.reset_hit)
 	pass # Replace with function body.
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -22,16 +20,8 @@ func _process(delta: float) -> void:
 	pass
 
 
-func take_damage(area):
-	var node = area
-	print(node)
-	node = node.get_parent().get_parent()
-	print(node)
-	if(node is Weapon):
-		current_state = states.GOT_HIT
+func take_damage():
+	current_state = states.GOT_HIT
 
-func reset_hit(area):
-	var node = area
-	node = node.get_parent().get_parent()
-	if(node is Weapon):
+func reset_hit():
 		current_state = states.IDLE

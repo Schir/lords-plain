@@ -27,10 +27,17 @@ func attack():
 
 func damage(area):
 	if(can_damage_again):
-		print(area)
+		var nodeToGet = area.owner
+		print(nodeToGet)
+		if nodeToGet.has_method("take_damage"):
+			nodeToGet.take_damage()
 		can_damage_again = false
 	pass
 	
 	
 func allowMoreDamage(area):
 	can_damage_again = true
+	var nodeToGet = area.owner
+	print(nodeToGet)
+	if nodeToGet.has_method("reset_hit"):
+		nodeToGet.reset_hit()

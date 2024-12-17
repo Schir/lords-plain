@@ -30,7 +30,7 @@ func damage(area):
 		var nodeToGet = area.owner
 		print(nodeToGet)
 		if nodeToGet.has_method("take_damage"):
-			nodeToGet.take_damage()
+			nodeToGet.take_damage(pierce_damage, blunt_damage, slash_damage, magic_damage)
 		can_damage_again = false
 	pass
 	

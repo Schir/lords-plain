@@ -5,7 +5,14 @@ extends Node3D
 @export var slashEffectiveness : float
 @export var magicEffectiveness : float
 
+@export var minimumGold : int = 1
+@export var maximumGold : int = 10
+
 @onready var animations = $AnimationPlayer
+
+@onready var goldPath = preload("res://gold.tscn")
+
+var has_generated_items : bool = false
 
 enum states { IDLE, ATTACKING, GOT_HIT, DEAD}
 var current_state : states = states.IDLE
@@ -30,8 +37,10 @@ func _process(delta: float) -> void:
 				if(self.scale.x > 0.01):
 					fadeout()
 				else:
-					drop_item()
+					if(!has_generated_items):
+						drop_item()
 					self.visible = false
+					get_parent().remove_child(self)
 	pass
 
 
@@ -56,6 +65,12 @@ func fadeout():
 	self.scale -= Vector3(0.03, 0.03, 0.03)
 
 func drop_item():
+	var gold = (load("res://gold.tscn").instantiate())
+	get_parent().add_child(gold)
+	gold.generate_coins(minimumGold, maximumGold)
+	gold.position = position
+	
+	has_generated_items = true
 	pass
 
 func ai_routine():

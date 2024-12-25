@@ -56,7 +56,7 @@ func _physics_process(delta):
 			var pth = result.collider.get_path()
 			print(pth)
 			var node = get_node(pth)
-			node = node.get_parent().get_parent()
+			node = node.owner
 			if node.has_method("interact"):
 				node.interact()
 		checkInFront = false

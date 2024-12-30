@@ -12,7 +12,7 @@ transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
 mesh = ExtResource("1_158tq")
 script = ExtResource("2_15myt")
 
-[node name="goldbody" type="RigidBody3D" parent="."]
+[node name="goldbody" type="StaticBody3D" parent="."]
 
 [node name="gold" type="CollisionShape3D" parent="goldbody"]
 shape = SubResource("CylinderShape3D_wxcdu")

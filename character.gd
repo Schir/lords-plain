@@ -8,7 +8,8 @@ extends CharacterBody3D
 var speed : float = 4
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 var checkInFront : bool = false
-var RAYDISTANCE : float = 0.85
+var RAYDISTANCE : float = 0.5
+var checkFromMouse : bool = false
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass # Replace with function body.
@@ -27,6 +28,11 @@ func get_input():
 	var input_dir = Input.get_vector("strafe_left", "strafe_right", "ui_up", "ui_down")
 	if Input.is_action_just_pressed("ui_select"):
 		checkInFront = true
+	if Input.is_action_just_released("click"):
+		checkFromMouse = true
+		var cam = $"Camera3D"
+		var mouse_pos = get_viewport().get_mouse_position()
+		doRaycast(mouse_pos)
 	#var input3 = Vector3(-input_dir.x, 0, input_dir.y)
 	var forw = transform.basis.z * input_dir.y
 	forw.y = 0
@@ -45,21 +51,9 @@ func _physics_process(delta):
 	var screensize = DisplayServer.window_get_size()
 	if(checkInFront):
 		var cam = $"Camera3D"
-		var from = cam.project_ray_origin(screensize/2)
-		var to = from + cam.project_ray_normal(screensize/2) * RAYDISTANCE
-		var space_state = get_world_3d().direct_space_state
-		var query = PhysicsRayQueryParameters3D.create(from, to,
-		collision_mask, [self])
-		var result = space_state.intersect_ray(query)
-		print(result)
-		if "collider" in result:
-			var pth = result.collider.get_path()
-			print(pth)
-			var node = get_node(pth)
-			node = node.owner
-			if node.has_method("interact"):
-				node.interact()
+		doRaycast(screensize/2)
 		checkInFront = false
+	#if(checkFromMouse):
 	#for i in get_slide_collision_count():
 	#	var collision = get_slide_collision(i)
 	#	print("I collided with ", collision.get_collider().name)
@@ -71,3 +65,20 @@ func _process(delta: float) -> void:
 func rotate_up(delta):
 	if(get_rotation().x < 1.3):
 		rotate(transform.basis.x, delta)
+
+func doRaycast(position):
+	var cam = $"Camera3D"
+	var from = cam.project_ray_origin(position)
+	var to = from + cam.project_ray_normal(position) * RAYDISTANCE
+	var space_state = get_world_3d().direct_space_state
+	var query = PhysicsRayQueryParameters3D.create(from, to,
+	collision_mask, [self])
+	var result = space_state.intersect_ray(query)
+	print(result)
+	if "collider" in result:
+		var pth = result.collider.get_path()
+		print(pth)
+		var node = get_node(pth)
+		node = node.owner
+		if node.has_method("interact"):
+			node.interact()

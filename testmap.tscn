@@ -29,6 +29,7 @@ size = Vector3(1, 4.5, 1)
 mesh = ExtResource("1_r0hsg")
 
 [node name="map" type="StaticBody3D" parent="Testmap2-Region1"]
+input_ray_pickable = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Testmap2-Region1/map"]
 shape = SubResource("ConcavePolygonShape3D_7bdlm")

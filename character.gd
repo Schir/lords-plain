@@ -8,7 +8,7 @@ extends CharacterBody3D
 var speed : float = 4
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 var checkInFront : bool = false
-var RAYDISTANCE : float = 0.5
+var RAYDISTANCE : float = 1.0
 var checkFromMouse : bool = false
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -31,8 +31,6 @@ func get_input():
 	if Input.is_action_just_released("click"):
 		checkFromMouse = true
 		var cam = $"Camera3D"
-		var mouse_pos = get_viewport().get_mouse_position()
-		doRaycast(mouse_pos)
 	#var input3 = Vector3(-input_dir.x, 0, input_dir.y)
 	var forw = transform.basis.z * input_dir.y
 	forw.y = 0
@@ -53,7 +51,10 @@ func _physics_process(delta):
 		var cam = $"Camera3D"
 		doRaycast(screensize/2)
 		checkInFront = false
-	#if(checkFromMouse):
+	if(checkFromMouse):
+		var mouse_pos = get_viewport().get_mouse_position()
+		doRaycast(mouse_pos)
+		checkFromMouse = false
 	#for i in get_slide_collision_count():
 	#	var collision = get_slide_collision(i)
 	#	print("I collided with ", collision.get_collider().name)

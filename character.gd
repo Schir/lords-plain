@@ -9,36 +9,64 @@ var speed : float = 4
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 var checkInFront : bool = false
 var RAYDISTANCE : float = 1.0
+var OBJECTDISTANCE : float = 0.3
 var checkFromMouse : bool = false
+enum states {
+	NORMAL,
+	PICK_UP_ITEM,
+	MENU,
+	READING
+}
+var currentState : states = states.NORMAL
+var currentItemReference : InventoryItem = null
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass # Replace with function body.
 
 func get_input():
-	var rot = get_rotation()
-	if Input.is_action_pressed("ui_left"):
-		rotate_y(0.1)
-	if Input.is_action_pressed("ui_right"):
-		rotate_y(-0.1)	
-	if Input.is_action_pressed("look_up"):
-		rotate_up(0.1)
-	if Input.is_action_pressed("look_down"):
-		if(rot.x > -1.0):
-			rotate(transform.basis.x, -0.1)
-	var input_dir = Input.get_vector("strafe_left", "strafe_right", "ui_up", "ui_down")
-	if Input.is_action_just_pressed("ui_select"):
-		checkInFront = true
-	if Input.is_action_just_released("click"):
-		checkFromMouse = true
-		var cam = $"Camera3D"
-	#var input3 = Vector3(-input_dir.x, 0, input_dir.y)
-	var forw = transform.basis.z * input_dir.y
-	forw.y = 0
-	var side = transform.basis.x * input_dir.x
-	side.y = 0
-	velocity = forw + side
-	velocity.y = 0
-	velocity = velocity.normalized() * speed
+	match(currentState):
+		states.NORMAL:
+			var rot = get_rotation()
+			if Input.is_action_pressed("ui_left"):
+				rotate_y(0.1)
+			if Input.is_action_pressed("ui_right"):
+				rotate_y(-0.1)	
+			if Input.is_action_pressed("look_up"):
+				rotate_up(0.1)
+			if Input.is_action_pressed("look_down"):
+				if(rot.x > -1.0):
+					rotate(transform.basis.x, -0.1)
+			var input_dir = Input.get_vector("strafe_left", "strafe_right", "ui_up", "ui_down")
+			if Input.is_action_just_pressed("ui_select"):
+				checkInFront = true
+			if Input.is_action_just_released("click"):
+				checkFromMouse = true
+				var cam = $"Camera3D"
+			#var input3 = Vector3(-input_dir.x, 0, input_dir.y)
+			var forw = transform.basis.z * input_dir.y
+			forw.y = 0
+			var side = transform.basis.x * input_dir.x
+			side.y = 0
+			velocity = forw + side
+			velocity.y = 0
+			velocity = velocity.normalized() * speed
+		states.PICK_UP_ITEM:
+			if(Input.is_action_just_pressed("ui_accept")):
+				if currentItemReference.has_method("get_gold"):
+					gold += currentItemReference.get_gold()
+				else:
+					var item = currentItemReference
+					inventory.push_back(item)
+				currentItemReference.queue_free()
+				currentItemReference = null
+				currentState = states.NORMAL
+				pass
+			if(Input.is_action_just_pressed("ui_cancel")):
+				currentItemReference.zoom_out()
+				currentState = states.NORMAL
+				pass
+			
+			pass
 
 func _physics_process(delta):
 	get_input()
@@ -83,3 +111,11 @@ func doRaycast(position):
 		node = node.owner
 		if node.has_method("interact"):
 			node.interact()
+		if node.has_method("zoom_in"):
+			var screensize = DisplayServer.window_get_size()
+			var from1 = cam.project_ray_origin(screensize/2)
+			var to1 = from1 + cam.project_ray_normal(screensize/2) * OBJECTDISTANCE
+			to1.y -= 0.1
+			node.zoom_in(to1)
+			currentState = states.PICK_UP_ITEM
+			currentItemReference = node

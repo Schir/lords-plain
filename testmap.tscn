@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://b3ir2k65ry855"]
+[gd_scene load_steps=14 format=3 uid="uid://b3ir2k65ry855"]
 
 [ext_resource type="ArrayMesh" uid="uid://dphkiuhho1blm" path="res://testmap2 - Region 1.obj" id="1_r0hsg"]
 [ext_resource type="PackedScene" uid="uid://dwtjlc2xwoekb" path="res://player.tscn" id="1_ve3hq"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://rotator.gd" id="5_b1fjr"]
 [ext_resource type="ArrayMesh" uid="uid://c0a1unbyv2f8e" path="res://rapier.obj" id="6_di3nc"]
 [ext_resource type="PackedScene" uid="uid://jvuovfojl5hh" path="res://chest.tscn" id="7_v0b7o"]
+[ext_resource type="PackedScene" uid="uid://ctuclt7plq32" path="res://rapier.tscn" id="9_jbj1p"]
 [ext_resource type="PackedScene" uid="uid://dwn378vpfmne8" path="res://testskeleton.tscn" id="9_ryewp"]
 
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_7bdlm"]
@@ -69,3 +70,6 @@ transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 6.75913, 0.00128233, -6
 
 [node name="skeleton(3)" parent="." instance=ExtResource("9_ryewp")]
 transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, 6, 0, 0)
+
+[node name="rapier" parent="." instance=ExtResource("9_jbj1p")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0.229188, 0.0643066, -1.66617)

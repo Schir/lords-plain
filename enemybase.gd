@@ -69,6 +69,7 @@ func drop_item():
 	get_parent().add_child(gold)
 	gold.generate_coins(minimumGold, maximumGold)
 	gold.position = position
+	gold.set_positions(position)
 	
 	has_generated_items = true
 	pass

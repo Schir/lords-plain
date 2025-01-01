@@ -15,10 +15,17 @@ slash_damage = 5
 weight = 2.0
 
 [node name="Cube_001" parent="." index="0"]
-transform = Transform3D(-1, -1.50996e-07, 0, 1.50996e-07, -1, 0, 0, 0, 1, 0, 0, 0)
+transform = Transform3D(-1, -1.50035e-07, 9.13817e-09, 1.50169e-07, -0.994522, 0.104528, -6.59485e-09, 0.104528, 0.994522, 0, -0.22, 0)
 
-[node name="Area3D" type="Area3D" parent="Cube_001" index="0"]
+[node name="StaticBody3D" type="StaticBody3D" parent="Cube_001" index="0"]
+transform = Transform3D(-1, 1.50169e-07, -6.59485e-09, -1.50035e-07, -0.994522, 0.104528, 9.13817e-09, 0.104528, 0.994522, 3.30371e-08, -0.218795, 0.0229963)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Cube_001/Area3D" index="0"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.027)
+[node name="CollisionShape3D1" type="CollisionShape3D" parent="Cube_001/StaticBody3D" index="0"]
+transform = Transform3D(-1, -1.50035e-07, 9.13817e-09, 1.50169e-07, -0.994522, 0.104528, -6.59485e-09, 0.104528, 0.994522, -1.85231e-08, -0.431879, -2.0159)
+shape = SubResource("BoxShape3D_33am2")
+
+[node name="Area3D" type="Area3D" parent="Cube_001" index="1"]
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Cube_001/Area3D" index="0"]
+transform = Transform3D(-1, -1.50035e-07, 9.13817e-09, 1.50169e-07, -0.994522, 0.104528, -6.59486e-09, 0.104528, 0.994522, -1.85231e-08, -0.431879, -4.0429)
 shape = SubResource("BoxShape3D_33am2")

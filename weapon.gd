@@ -7,18 +7,24 @@ extends InventoryItem
 @export var slash_damage : int
 @export var magic_damage : int
 var can_damage_again : bool = true
+var hitbox : Area3D
+var collider2 : CollisionShape3D
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	var hitbox = $Cube_001/Area3D
+	hitbox = $Cube_001/Area3D
+	collider = $Cube_001/StaticBody3D/CollisionShape3D1
+	collider2 = $Cube_001/Area3D/CollisionShape3D2
 	hitbox.body_entered.connect(self.damage)
 	hitbox.body_exited.connect(self.allowMoreDamage)
+	initialPosition = position
+	targetPosition = position
 	pass # Replace with function body.
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
+#func _process(delta: float) -> void:
+	#pass
 
 
 func attack():
@@ -41,3 +47,18 @@ func allowMoreDamage(area):
 	print(nodeToGet)
 	if nodeToGet.has_method("reset_hit"):
 		nodeToGet.reset_hit()
+
+func zoom_in(target : Vector3):
+	targetPosition = target
+	collider.disabled = true
+	collider2.disabled = true
+	hitbox.body_entered.disconnect(self.damage)
+	hitbox.body_exited.disconnect(self.allowMoreDamage)
+
+func zoom_out():
+	targetPosition = initialPosition
+	change_rotation()
+	hitbox.body_entered.connect(self.damage)
+	hitbox.body_exited.connect(self.allowMoreDamage)
+	collider.disabled = false
+	collider2.disabled = false

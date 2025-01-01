@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://ctuclt7plq32"]
+[gd_scene load_steps=5 format=3 uid="uid://ctuclt7plq32"]
 
 [ext_resource type="PackedScene" uid="uid://6f8akf8dx58h" path="res://rapier.glb" id="2_0qqa3"]
-[ext_resource type="Script" path="res://weapon.gd" id="2_2nbn1"]
+[ext_resource type="Script" path="res://worldweapon.gd" id="2_2nbn1"]
+[ext_resource type="Resource" uid="uid://c8k60qecoemyt" path="res://rapier.tres" id="3_ufxeb"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_33am2"]
 size = Vector3(0.26, 0.26, 3.82)
@@ -9,23 +10,20 @@ size = Vector3(0.26, 0.26, 3.82)
 [node name="rapier" instance=ExtResource("2_0qqa3")]
 transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
 script = ExtResource("2_2nbn1")
-pierce_damage = 60
-blunt_damage = 1
-slash_damage = 5
-weight = 2.0
+weaponInfo = ExtResource("3_ufxeb")
 
 [node name="Cube_001" parent="." index="0"]
-transform = Transform3D(-1, -1.50035e-07, 9.13817e-09, 1.50169e-07, -0.994522, 0.104528, -6.59485e-09, 0.104528, 0.994522, 0, -0.22, 0)
+transform = Transform3D(-1, -1.50996e-07, -1.0489e-11, 1.50996e-07, -1, -0.00011998, 7.62749e-12, -0.00011998, 1, 0, -0.22, 0)
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Cube_001" index="0"]
-transform = Transform3D(-1, 1.50169e-07, -6.59485e-09, -1.50035e-07, -0.994522, 0.104528, 9.13817e-09, 0.104528, 0.994522, 3.30371e-08, -0.218795, 0.0229963)
+transform = Transform3D(-1, -8.74228e-08, 0, 8.74228e-08, -1, 0, 0, 0, 1, 0, 0, 0)
 
 [node name="CollisionShape3D1" type="CollisionShape3D" parent="Cube_001/StaticBody3D" index="0"]
-transform = Transform3D(-1, -1.50035e-07, 9.13817e-09, 1.50169e-07, -0.994522, 0.104528, -6.59485e-09, 0.104528, 0.994522, -1.85231e-08, -0.431879, -2.0159)
+transform = Transform3D(-1, 8.74228e-08, 0, -8.74228e-08, -1, 0, 0, 0, 1, 0, 0, -2.016)
 shape = SubResource("BoxShape3D_33am2")
 
 [node name="Area3D" type="Area3D" parent="Cube_001" index="1"]
 
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="Cube_001/Area3D" index="0"]
-transform = Transform3D(-1, -1.50035e-07, 9.13817e-09, 1.50169e-07, -0.994522, 0.104528, -6.59486e-09, 0.104528, 0.994522, -1.85231e-08, -0.431879, -4.0429)
+transform = Transform3D(-1, 8.74228e-08, 0, -8.74228e-08, -1, 0, 0, 0, 1, 0, 0, -2.016)
 shape = SubResource("BoxShape3D_33am2")

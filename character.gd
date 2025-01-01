@@ -18,7 +18,7 @@ enum states {
 	READING
 }
 var currentState : states = states.NORMAL
-var currentItemReference : InventoryItem = null
+var currentItemReference : WorldItem = null
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass # Replace with function body.
@@ -55,8 +55,8 @@ func get_input():
 				if currentItemReference.has_method("get_gold"):
 					gold += currentItemReference.get_gold()
 				else:
-					var item = currentItemReference
-					inventory.push_back(item)
+					var itemRef = currentItemReference.get_item()
+					inventory.push_back(itemRef)
 				currentItemReference.queue_free()
 				currentItemReference = null
 				currentState = states.NORMAL

@@ -1,4 +1,4 @@
-extends InventoryItem
+extends WorldItem
 
 class_name Gold
 @export var gold_value : int

@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://dwtjlc2xwoekb"]
+[gd_scene load_steps=7 format=3 uid="uid://dwtjlc2xwoekb"]
 
 [ext_resource type="Script" path="res://character.gd" id="1_slbmj"]
 [ext_resource type="PackedScene" uid="uid://ctuclt7plq32" path="res://rapier.tscn" id="2_tk5if"]
 [ext_resource type="Script" path="res://hpstaminabars.gd" id="3_8gksc"]
+[ext_resource type="PackedScene" uid="uid://dp25d26nrp1rm" path="res://gamemenu.tscn" id="4_wnd2n"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_kchtj"]
 
@@ -59,3 +60,6 @@ offset_right = 142.0
 offset_bottom = 142.0
 color = Color(0.615686, 0.862745, 0, 1)
 script = ExtResource("3_8gksc")
+
+[node name="menu" parent="." instance=ExtResource("4_wnd2n")]
+visible = false

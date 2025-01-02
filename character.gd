@@ -6,6 +6,7 @@ var maxStamina : float = 100
 @export var inventory : Array[InventoryItem]
 @export var gold : int = 0
 @export var weight : float = 253 # approximating the weight of a cop
+var maxWeight : float = 300
 
 var speed : float = 3
 var defaultSpeed : float = 3
@@ -27,6 +28,7 @@ var decreaseStamina : bool = false
 
 @onready var healthbar = $health
 @onready var staminabar = $stamina
+@onready var menu = $menu
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass # Replace with function body.
@@ -34,36 +36,7 @@ func _ready() -> void:
 func get_input():
 	match(currentState):
 		states.NORMAL:
-			var rot = get_rotation()
-			if Input.is_action_pressed("ui_left"):
-				rotate_y(0.1)
-			if Input.is_action_pressed("ui_right"):
-				rotate_y(-0.1)	
-			if Input.is_action_pressed("look_up"):
-				rotate_up(0.1)
-			if Input.is_action_pressed("look_down"):
-				if(rot.x > -1.0):
-					rotate(transform.basis.x, -0.1)
-			if Input.is_action_just_pressed("run"):
-				decreaseStamina = true
-				speed = maxSpeed
-			if Input.is_action_just_released("run"):
-				decreaseStamina = false
-				speed = defaultSpeed
-			var input_dir = Input.get_vector("strafe_left", "strafe_right", "ui_up", "ui_down")
-			if Input.is_action_just_pressed("ui_select"):
-				checkInFront = true
-			if Input.is_action_just_released("click"):
-				checkFromMouse = true
-				var cam = $"Camera3D"
-			#var input3 = Vector3(-input_dir.x, 0, input_dir.y)
-			var forw = transform.basis.z * input_dir.y
-			forw.y = 0
-			var side = transform.basis.x * input_dir.x
-			side.y = 0
-			velocity = forw + side
-			velocity.y = 0
-			velocity = velocity.normalized() * speed
+			normal_state_process()
 		states.PICK_UP_ITEM:
 			if(Input.is_action_just_pressed("ui_accept")):
 				if currentItemReference.has_method("get_gold"):
@@ -79,8 +52,50 @@ func get_input():
 				currentItemReference.zoom_out()
 				currentState = states.NORMAL
 				pass
-			
+		states.MENU:
+			if Input.is_action_just_pressed("ui_cancel"):
+				currentState = states.NORMAL
+				menu.visible = false
 			pass
+			
+func normal_state_process():
+	var rot = get_rotation()
+	if Input.is_action_pressed("ui_left"):
+		rotate_y(0.1)
+	if Input.is_action_pressed("ui_right"):
+		rotate_y(-0.1)	
+	if Input.is_action_pressed("look_up"):
+		rotate_up(0.1)
+	if Input.is_action_pressed("look_down"):
+		if(rot.x > -1.0):
+			rotate(transform.basis.x, -0.1)
+	if Input.is_action_just_pressed("run"):
+		decreaseStamina = true
+		speed = maxSpeed
+	if Input.is_action_just_released("run"):
+		decreaseStamina = false
+		speed = defaultSpeed
+	var input_dir = Input.get_vector("strafe_left", "strafe_right", "ui_up", "ui_down")
+	if Input.is_action_just_pressed("ui_select"):
+		checkInFront = true
+	if Input.is_action_just_released("click"):
+		checkFromMouse = true
+		var cam = $"Camera3D"
+	var forw = transform.basis.z * input_dir.y
+	forw.y = 0
+	var side = transform.basis.x * input_dir.x
+	side.y = 0
+	velocity = forw + side
+	if Input.is_action_just_pressed("ui_cancel"):
+		currentState = states.MENU
+		menu.visible = true
+		velocity = Vector3(0,0,0)
+		decreaseStamina = false
+	#var input3 = Vector3(-input_dir.x, 0, input_dir.y)
+
+	
+	velocity.y = 0
+	velocity = velocity.normalized() * speed
 
 func _physics_process(delta):
 	get_input()
@@ -98,8 +113,9 @@ func _physics_process(delta):
 		doRaycast(mouse_pos)
 		checkFromMouse = false
 	if(decreaseStamina):
-		stamina -= determine_stamina_loss_per_tick()
-		staminabar.set_width(stamina)
+		if(stamina > 0):
+			stamina -= determine_stamina_loss_per_tick()
+			staminabar.set_width(stamina)
 	else:
 		if stamina < maxStamina:
 			stamina += 0.5
@@ -151,4 +167,4 @@ func sendHP():
 	return hp
 
 func determine_stamina_loss_per_tick():
-	return weight/250
+	return weight/maxWeight

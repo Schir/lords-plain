@@ -2,10 +2,14 @@ extends CharacterBody3D
 
 @export var hp : int = 100
 @export var stamina : float = 100
+var maxStamina : float = 100
 @export var inventory : Array[InventoryItem]
 @export var gold : int = 0
+@export var weight : float = 253 # approximating the weight of a cop
 
-var speed : float = 4
+var speed : float = 3
+var defaultSpeed : float = 3
+var maxSpeed : float = 6
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 var checkInFront : bool = false
 var RAYDISTANCE : float = 1.0
@@ -19,6 +23,10 @@ enum states {
 }
 var currentState : states = states.NORMAL
 var currentItemReference : WorldItem = null
+var decreaseStamina : bool = false
+
+@onready var healthbar = $health
+@onready var staminabar = $stamina
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass # Replace with function body.
@@ -36,6 +44,12 @@ func get_input():
 			if Input.is_action_pressed("look_down"):
 				if(rot.x > -1.0):
 					rotate(transform.basis.x, -0.1)
+			if Input.is_action_just_pressed("run"):
+				decreaseStamina = true
+				speed = maxSpeed
+			if Input.is_action_just_released("run"):
+				decreaseStamina = false
+				speed = defaultSpeed
 			var input_dir = Input.get_vector("strafe_left", "strafe_right", "ui_up", "ui_down")
 			if Input.is_action_just_pressed("ui_select"):
 				checkInFront = true
@@ -83,6 +97,13 @@ func _physics_process(delta):
 		var mouse_pos = get_viewport().get_mouse_position()
 		doRaycast(mouse_pos)
 		checkFromMouse = false
+	if(decreaseStamina):
+		stamina -= determine_stamina_loss_per_tick()
+		staminabar.set_width(stamina)
+	else:
+		if stamina < maxStamina:
+			stamina += 0.5
+			staminabar.set_width(stamina)
 	#for i in get_slide_collision_count():
 	#	var collision = get_slide_collision(i)
 	#	print("I collided with ", collision.get_collider().name)
@@ -110,12 +131,24 @@ func doRaycast(position):
 		var node = get_node(pth)
 		node = node.owner
 		if node.has_method("interact"):
-			node.interact()
-		if node.has_method("zoom_in"):
-			var screensize = DisplayServer.window_get_size()
-			var from1 = cam.project_ray_origin(screensize/2)
-			var to1 = from1 + cam.project_ray_normal(screensize/2) * OBJECTDISTANCE
-			to1.y -= 0.1
-			node.zoom_in(to1)
-			currentState = states.PICK_UP_ITEM
-			currentItemReference = node
+			if(node.has_method("get_equip_status")):
+				if(!node.get_equip_status()):
+					node.interact()
+			else:
+				node.interact()
+			if node.has_method("zoom_in"):
+				if(node.has_method("get_equip_status")):
+					if(!node.get_equip_status()):
+						var screensize = DisplayServer.window_get_size()
+						var from1 = cam.project_ray_origin(screensize/2)
+						var to1 = from1 + cam.project_ray_normal(screensize/2) * OBJECTDISTANCE
+						to1.y -= 0.1
+						node.zoom_in(to1)
+						currentState = states.PICK_UP_ITEM
+						currentItemReference = node
+
+func sendHP():
+	return hp
+
+func determine_stamina_loss_per_tick():
+	return weight/250

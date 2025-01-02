@@ -8,6 +8,7 @@ var initialPosition : Vector3
 var targetPosition : Vector3
 var zoomBool :bool = false
 var collider : CollisionShape3D
+@export var isEquipped : bool = false
 
 
 # Called when the node enters the scene tree for the first time.
@@ -23,7 +24,6 @@ func _process(delta: float) -> void:
 
 
 func interact():
-	
 	change_rotation()
 
 func change_rotation():
@@ -47,3 +47,6 @@ func set_positions(target : Vector3):
 
 func get_item():
 	return item
+
+func get_equip_status():
+	return isEquipped

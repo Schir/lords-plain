@@ -7,6 +7,7 @@ var can_damage_again : bool = true
 var hitbox : Area3D
 var collider2 : CollisionShape3D
 
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	hitbox = $Cube_001/Area3D
@@ -46,13 +47,15 @@ func allowMoreDamage(area):
 		nodeToGet.reset_hit()
 
 func zoom_in(target : Vector3):
-	targetPosition = target
-	collider.disabled = true
-	collider2.disabled = true
-	hitbox.body_entered.disconnect(self.damage)
-	hitbox.body_exited.disconnect(self.allowMoreDamage)
+	if(!isEquipped):
+		targetPosition = target
+		collider.disabled = true
+		collider2.disabled = true
+		hitbox.body_entered.disconnect(self.damage)
+		hitbox.body_exited.disconnect(self.allowMoreDamage)
 
 func zoom_out():
+	
 	targetPosition = initialPosition
 	change_rotation()
 	hitbox.body_entered.connect(self.damage)

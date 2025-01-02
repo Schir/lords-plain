@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://dwtjlc2xwoekb"]
+[gd_scene load_steps=6 format=3 uid="uid://dwtjlc2xwoekb"]
 
 [ext_resource type="Script" path="res://character.gd" id="1_slbmj"]
 [ext_resource type="PackedScene" uid="uid://ctuclt7plq32" path="res://rapier.tscn" id="2_tk5if"]
+[ext_resource type="Script" path="res://hpstaminabars.gd" id="3_8gksc"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_kchtj"]
 
@@ -27,3 +28,34 @@ skeleton = NodePath("../..")
 
 [node name="rapier" parent="." instance=ExtResource("2_tk5if")]
 transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0.146395, -0.117363, -0.210896)
+isEquipped = true
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_left = 39.0
+offset_top = 32.0
+offset_right = 151.0
+offset_bottom = 91.0
+color = Color(0, 0, 0, 1)
+
+[node name="ColorRect2" type="ColorRect" parent="."]
+offset_left = 39.0
+offset_top = 88.0
+offset_right = 151.0
+offset_bottom = 147.0
+color = Color(0, 0, 0, 1)
+
+[node name="health" type="ColorRect" parent="."]
+offset_left = 42.0
+offset_top = 37.0
+offset_right = 142.0
+offset_bottom = 87.0
+color = Color(0.615615, 1.09497e-06, 3.85046e-07, 1)
+script = ExtResource("3_8gksc")
+
+[node name="stamina" type="ColorRect" parent="."]
+offset_left = 42.0
+offset_top = 92.0
+offset_right = 142.0
+offset_bottom = 142.0
+color = Color(0.615686, 0.862745, 0, 1)
+script = ExtResource("3_8gksc")

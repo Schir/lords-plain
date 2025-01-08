@@ -1,0 +1,36 @@
+[gd_scene load_steps=3 format=3 uid="uid://cgwm3xa81l0xc"]
+
+[ext_resource type="Texture2D" uid="uid://celc8nxl1ujt8" path="res://textures/menuborder.png" id="1_up2o6"]
+[ext_resource type="Texture2D" uid="uid://b38d70dh2un0k" path="res://textures/08.BMP" id="2_btpde"]
+
+[node name="itembox" type="NinePatchRect"]
+anchors_preset = -1
+anchor_right = 0.304
+anchor_bottom = 0.093
+offset_right = -0.208008
+offset_bottom = -0.264
+texture = ExtResource("1_up2o6")
+draw_center = false
+region_rect = Rect2(0, 0, 32, 32)
+patch_margin_left = 6
+patch_margin_top = 6
+patch_margin_right = 6
+patch_margin_bottom = 6
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+
+[node name="TextureRect2" type="TextureRect" parent="."]
+modulate = Color(1, 1, 1, 0.427451)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 6.0
+offset_top = 6.0
+offset_right = -6.0
+offset_bottom = -6.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_btpde")
+expand_mode = 3
+stretch_mode = 1

@@ -1,112 +1,31 @@
-[gd_scene load_steps=8 format=3 uid="uid://dp25d26nrp1rm"]
+[gd_scene load_steps=5 format=3 uid="uid://dp25d26nrp1rm"]
 
-[ext_resource type="Texture2D" uid="uid://e233iw34eiqa" path="res://textures/41metal.png" id="1_wn6d2"]
 [ext_resource type="FontFile" uid="uid://dstbh7gcpn3rc" path="res://fonts/Kiwi_Maru/KiwiMaru-Regular.ttf" id="2_irrot"]
 [ext_resource type="Texture2D" uid="uid://celc8nxl1ujt8" path="res://textures/menuborder.png" id="3_lmah5"]
-[ext_resource type="Texture2D" uid="uid://pioojtqqygam" path="res://textures/10.png" id="3_w7yux"]
 [ext_resource type="Texture2D" uid="uid://b38d70dh2un0k" path="res://textures/08.BMP" id="5_8qph4"]
-
-[sub_resource type="Gradient" id="Gradient_t66va"]
-colors = PackedColorArray(0, 0.552941, 0, 0.521569, 0.137255, 0.247059, 0.0235294, 0.580392)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_1t8ue"]
-gradient = SubResource("Gradient_t66va")
-fill_to = Vector2(1, 1)
-metadata/_snap_count = 15
+[ext_resource type="PackedScene" uid="uid://cgwm3xa81l0xc" path="res://menuitem.tscn" id="7_owp0w"]
 
 [node name="menu" type="Control"]
 layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="NinePatchRect3" type="NinePatchRect" parent="."]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 3.725
-anchor_right = 15.05
-anchor_bottom = 15.95
-offset_top = 4.0
-offset_right = 0.00012207
-texture = ExtResource("3_lmah5")
-draw_center = false
-patch_margin_left = 5
-patch_margin_top = 5
-patch_margin_right = 5
-patch_margin_bottom = 5
-
-[node name="TextureRect" type="TextureRect" parent="NinePatchRect3"]
-layout_mode = 0
-offset_left = 5.0
-offset_top = 5.0
-offset_right = 449.0
-offset_bottom = 629.0
-texture = SubResource("GradientTexture2D_1t8ue")
-
-[node name="background" type="TextureRect" parent="NinePatchRect3/TextureRect"]
-modulate = Color(1, 1, 1, 0.117647)
-layout_mode = 1
-anchors_preset = -1
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 1.0
-offset_right = 1.0
-texture = ExtResource("1_wn6d2")
-expand_mode = 1
-
-[node name="TextureButton" type="TextureButton" parent="."]
-layout_mode = 0
-offset_left = 239.0
-offset_top = 370.0
-offset_right = 405.0
-offset_bottom = 426.0
-texture_normal = ExtResource("3_w7yux")
-ignore_texture_size = true
-stretch_mode = 1
-flip_h = true
-
-[node name="NinePatchRect" type="NinePatchRect" parent="."]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 5.925
-anchor_top = 9.2
-anchor_right = 10.175
-anchor_bottom = 10.7
-offset_top = -3.05176e-05
-offset_bottom = -3.05176e-05
-texture = ExtResource("3_lmah5")
-draw_center = false
-patch_margin_left = 5
-patch_margin_top = 5
-patch_margin_right = 5
-patch_margin_bottom = 5
-
-[node name="itemlabel" type="RichTextLabel" parent="."]
-layout_mode = 1
-anchors_preset = -1
-anchor_right = 0.982
-anchor_bottom = 1.0
-offset_left = 239.0
-offset_top = 370.0
-offset_right = 366.72
-offset_bottom = 386.0
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_constants/shadow_offset_x = 3
-theme_override_constants/shadow_outline_size = 3
-theme_override_fonts/normal_font = ExtResource("2_irrot")
-theme_override_font_sizes/normal_font_size = 30
-bbcode_enabled = true
-text = "[center]ITEMS[/center]"
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
 
 [node name="NinePatchRect2" type="NinePatchRect" parent="."]
 layout_mode = 1
 anchors_preset = -1
-anchor_right = 0.111
-anchor_bottom = 0.129
-offset_left = 677.0
-offset_top = 137.0
-offset_right = 984.56
-offset_bottom = 291.84
+anchor_left = 0.563
+anchor_top = 0.139
+anchor_right = 0.82
+anchor_bottom = 0.667
+offset_left = 0.42395
+offset_top = -0.0720062
+offset_right = 0.359863
+offset_bottom = -0.232056
 texture = ExtResource("3_lmah5")
 draw_center = false
 patch_margin_left = 5
@@ -115,13 +34,13 @@ patch_margin_right = 5
 patch_margin_bottom = 5
 
 [node name="TextureRect2" type="TextureRect" parent="NinePatchRect2"]
-modulate = Color(1, 1, 1, 0.47451)
+modulate = Color(1, 1, 1, 0.427451)
 layout_mode = 1
-anchors_preset = 15
+anchors_preset = -1
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 4.0
-offset_top = 3.0
+offset_left = 5.0
+offset_top = 5.0
 offset_right = -5.0
 offset_bottom = -5.0
 texture = ExtResource("5_8qph4")
@@ -129,16 +48,194 @@ expand_mode = 1
 stretch_mode = 1
 
 [node name="RichTextLabel2" type="RichTextLabel" parent="NinePatchRect2"]
-layout_mode = 0
-offset_left = 14.0
-offset_top = 3.0
-offset_right = 305.0
-offset_bottom = 167.0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.047
+anchor_top = 0.043
+anchor_right = 0.574
+anchor_bottom = 1.0
+offset_left = 0.0879993
+offset_top = -0.0500002
+offset_right = 0.095993
+offset_bottom = -5.0
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_constants/shadow_offset_x = 3
 theme_override_constants/shadow_outline_size = 5
 theme_override_fonts/normal_font = ExtResource("2_irrot")
 theme_override_font_sizes/normal_font_size = 30
-text = "HP: 100
-Stamina: 100
-Gold: 0"
+text = "HP: 
+Stamina: 
+Gold: 
+Status: "
+
+[node name="RichTextLabel3" type="RichTextLabel" parent="NinePatchRect2"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.541
+anchor_top = 0.049
+anchor_right = 0.941
+anchor_bottom = 0.98
+offset_left = -0.136017
+offset_top = -3.15
+offset_right = -0.136017
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_outline_size = 5
+theme_override_fonts/normal_font = ExtResource("2_irrot")
+theme_override_font_sizes/normal_font_size = 30
+text = "100
+100
+0
+Normal"
+
+[node name="itembox" parent="." instance=ExtResource("7_owp0w")]
+layout_mode = 1
+anchor_left = 0.174
+anchor_top = 0.144
+anchor_right = 0.482
+anchor_bottom = 0.231
+offset_left = -0.448013
+offset_top = -3.312
+offset_right = -5.26404
+offset_bottom = 0.311996
+
+[node name="itemlabel" type="RichTextLabel" parent="itembox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 13.0
+offset_top = 4.0
+offset_right = -5.0
+offset_bottom = -6.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_outline_size = 3
+theme_override_fonts/normal_font = ExtResource("2_irrot")
+theme_override_font_sizes/normal_font_size = 30
+bbcode_enabled = true
+text = "USE ITEM"
+
+[node name="magicbox" parent="." instance=ExtResource("7_owp0w")]
+layout_mode = 1
+anchor_left = 0.174
+anchor_top = 0.247
+anchor_right = 0.477
+anchor_bottom = 0.34
+offset_left = -0.448013
+offset_top = -0.0559998
+offset_right = 0.495972
+offset_bottom = -0.320007
+
+[node name="itemlabel" type="RichTextLabel" parent="magicbox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 13.0
+offset_top = 4.0
+offset_right = -5.0
+offset_bottom = -6.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_outline_size = 3
+theme_override_fonts/normal_font = ExtResource("2_irrot")
+theme_override_font_sizes/normal_font_size = 30
+bbcode_enabled = true
+text = "USE MAGIC"
+
+[node name="equipbox" parent="." instance=ExtResource("7_owp0w")]
+layout_mode = 1
+anchor_left = 0.174
+anchor_top = 0.355
+anchor_right = 0.477
+anchor_bottom = 0.448
+offset_left = -0.448013
+offset_top = -0.0400085
+offset_right = 0.495972
+offset_bottom = -0.304016
+
+[node name="itemlabel" type="RichTextLabel" parent="equipbox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 13.0
+offset_top = 4.0
+offset_right = -5.0
+offset_bottom = -6.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_outline_size = 3
+theme_override_fonts/normal_font = ExtResource("2_irrot")
+theme_override_font_sizes/normal_font_size = 30
+bbcode_enabled = true
+text = "EQUIPMENT"
+
+[node name="optionbox" parent="." instance=ExtResource("7_owp0w")]
+layout_mode = 1
+anchor_left = 0.174
+anchor_top = 0.463
+anchor_right = 0.477
+anchor_bottom = 0.556
+offset_left = -0.448013
+offset_top = -0.0240173
+offset_right = 0.495972
+offset_bottom = -0.288025
+
+[node name="itemlabel" type="RichTextLabel" parent="optionbox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 13.0
+offset_top = 4.0
+offset_right = -5.0
+offset_bottom = -6.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_outline_size = 3
+theme_override_fonts/normal_font = ExtResource("2_irrot")
+theme_override_font_sizes/normal_font_size = 30
+bbcode_enabled = true
+text = "OPTIONS"
+
+[node name="backbox" parent="." instance=ExtResource("7_owp0w")]
+layout_mode = 1
+anchor_left = 0.174
+anchor_top = 0.571
+anchor_right = 0.477
+anchor_bottom = 0.664
+offset_left = -0.448013
+offset_top = -0.00802612
+offset_right = 0.495972
+offset_bottom = -0.272034
+
+[node name="itemlabel" type="RichTextLabel" parent="backbox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 13.0
+offset_top = 4.0
+offset_right = -5.0
+offset_bottom = -6.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_outline_size = 3
+theme_override_fonts/normal_font = ExtResource("2_irrot")
+theme_override_font_sizes/normal_font_size = 30
+bbcode_enabled = true
+text = "BACK"

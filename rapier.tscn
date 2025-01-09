@@ -7,7 +7,7 @@
 [sub_resource type="BoxShape3D" id="BoxShape3D_33am2"]
 size = Vector3(0.26, 0.26, 3.82)
 
-[node name="rapier" instance=ExtResource("2_0qqa3")]
+[node name="weapon" instance=ExtResource("2_0qqa3")]
 transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
 script = ExtResource("2_2nbn1")
 weaponInfo = ExtResource("3_ufxeb")

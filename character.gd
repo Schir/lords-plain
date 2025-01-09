@@ -7,6 +7,7 @@ var maxStamina : float = 100
 @export var gold : int = 0
 @export var weight : float = 253 # approximating the weight of a cop
 var maxWeight : float = 300
+@onready var weapon : WorldWeapon = $weapon
 
 var speed : float = 3
 var defaultSpeed : float = 3
@@ -31,6 +32,7 @@ var decreaseStamina : bool = false
 @onready var menu = $menu
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	weapon.visible = false
 	pass # Replace with function body.
 
 func get_input():
@@ -77,7 +79,8 @@ func normal_state_process():
 		speed = defaultSpeed
 	var input_dir = Input.get_vector("strafe_left", "strafe_right", "ui_up", "ui_down")
 	if Input.is_action_just_pressed("ui_select"):
-		checkInFront = true
+		weapon.visible = true
+		weapon.attack()
 	if Input.is_action_just_released("click"):
 		checkFromMouse = true
 		var cam = $"Camera3D"

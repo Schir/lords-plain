@@ -29,6 +29,9 @@ func _process(delta: float) -> void:
 			animations.play("idle")
 		states.GOT_HIT:
 			animations.play("damage")
+			await animations.animation_finished
+			reset_hit()
+			
 		states.DEAD:
 			animations.play("t-pose")
 			if(get_rotation().x < PI/2):
@@ -52,7 +55,6 @@ func take_damage(pierce, blunt, slash, magic):
 		(magic * magicEffectiveness))
 
 func reset_hit():
-	
 		current_state = states.IDLE
 
 func check_dead():

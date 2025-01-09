@@ -13,22 +13,24 @@ func _ready() -> void:
 	hitbox = $Cube_001/Area3D
 	collider = $Cube_001/StaticBody3D/CollisionShape3D1
 	collider2 = $Cube_001/Area3D/CollisionShape3D2
-	hitbox.body_entered.connect(self.damage)
-	hitbox.body_exited.connect(self.allowMoreDamage)
+	#hitbox.body_entered.connect(self.damage)
+	#hitbox.body_exited.connect(self.allowMoreDamage)
 	initialPosition = position
 	targetPosition = position
 	pass # Replace with function body.
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta: float) -> void:
+# func _process(delta: float) -> void:
 	#pass
 
 
 func attack():
-	$AnimationPlayer.play("Attack")
-
-
+	$AnimationPlayer.queue("Attack")
+	reenableDamage()
+	await $AnimationPlayer.animation_finished
+	visible = false
+	disableDamage()
 func damage(area):
 	if(can_damage_again):
 		var nodeToGet = area.owner
@@ -41,25 +43,23 @@ func damage(area):
 	
 func allowMoreDamage(area):
 	can_damage_again = true
-	var nodeToGet = area.owner
-	print(nodeToGet)
-	if nodeToGet.has_method("reset_hit"):
-		nodeToGet.reset_hit()
+	#var nodeToGet = area.owner
+	#print(nodeToGet)
+	#if nodeToGet.has_method("reset_hit"):
+	#	nodeToGet.reset_hit()
 
 func zoom_in(target : Vector3):
 	if(!isEquipped):
 		targetPosition = target
 		collider.disabled = true
 		collider2.disabled = true
-		hitbox.body_entered.disconnect(self.damage)
-		hitbox.body_exited.disconnect(self.allowMoreDamage)
+
 
 func zoom_out():
 	
 	targetPosition = initialPosition
 	change_rotation()
-	hitbox.body_entered.connect(self.damage)
-	hitbox.body_exited.connect(self.allowMoreDamage)
+
 	collider.disabled = false
 	collider2.disabled = false
 	
@@ -69,3 +69,7 @@ func get_item():
 func reenableDamage():
 	hitbox.body_entered.connect(self.damage)
 	hitbox.body_exited.connect(self.allowMoreDamage)
+
+func disableDamage():
+	hitbox.body_entered.disconnect(self.damage)
+	hitbox.body_exited.disconnect(self.allowMoreDamage)
